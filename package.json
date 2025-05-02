@@ -1,0 +1,24 @@
+{
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "description": "Este é um bot simples feito pela comunidade para fins educacionais!",
+  "author": "Victor Ribeiro",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astari-tech/discord-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/astari-tech/discord-bot/issues"
+  },
+  "homepage": "https://github.com/astari-tech/discord-bot#readme",
+  "dependencies": {
+    "discord.js": "^14.19.2",
+    "dotenv": "^16.5.0"
+  }
+}
