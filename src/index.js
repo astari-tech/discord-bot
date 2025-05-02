@@ -19,27 +19,16 @@ fs.readdirSync(commandsPath).forEach(async file => {
     client.commands.set(command.data.name, command)
 })
 
-//Evento: quando bot estiver online
-client.once('ready', () => {
-    console.log(`Bot está online como ${client.user.tag}`)
+// Carregar eventos
+const eventsPath = join(__dirname, 'events')
+fs.readdirSync(eventsPath).forEach(async file => {
+  const event = (await import(`file://${join(eventsPath, file)}`)).default
+  if (event.once) {
+    client.once(event.name, (...args) => event.execute(...args))
+  } else {
+    client.on(event.name, (...args) => event.execute(...args))
+  }
 })
 
-// Evento: mensagens
-client.on('messageCreate', async message => {
-    if(!message.content.startsWith(process.env.BOT_PREFIX) || message.author.bot) return
-
-    const args = message.content.slice(process.env.BOT_PREFIX.length).trim().split(/ +/)
-    const commandName = args.shift().toLowerCase()
-
-    const command = client.commands.get(commandName)
-    if(!command) return
-
-    try {
-        await command.execute(message, args)
-    } catch (error) {
-        console.error(error)
-        await message.reply({ content: 'Houve um erro ao executar esse comando!', ephemeral: true })
-    }
-})
-
+// Login do bot
 client.login(process.env.DISCORD_TOKEN)
